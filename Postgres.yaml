@@ -3,15 +3,14 @@ kind: Deployment
 metadata:
   name: postgres
   namespace: monapp
+  labels:
+    app: postgres
 spec:
   replicas: 1
-  selector:
-    matchLabels:
-      app: postgres
+  selector: { matchLabels: { app: postgres } }
   template:
     metadata:
-      labels:
-        app: postgres
+      labels: { app: postgres }
     spec:
       containers:
         - name: postgres
@@ -19,29 +18,11 @@ spec:
           ports:
             - containerPort: 5432
           env:
-            - name: POSTGRES_USER
-              value: "postgres"
-            - name: POSTGRES_PASSWORD
-              value: "postgres"
-            - name: POSTGRES_DB
-              value: "microservices_db"
+            - { name: POSTGRES_USER,     value: "postgres" }
+            - { name: POSTGRES_PASSWORD, value: "postgres" }
+            - { name: POSTGRES_DB,       value: "microservices_db" }
           volumeMounts:
-            - name: postgres-data
-              mountPath: /var/lib/postgresql/data
+            - { name: pgdata, mountPath: /var/lib/postgresql/data }
       volumes:
-        - name: postgres-data
+        - name: pgdata
           emptyDir: {}
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: postgres
-  namespace: monapp
-spec:
-  selector:
-    app: postgres
-  ports:
-    - protocol: TCP
-      port: 5432
-      targetPort: 5432
-  clusterIP: None
