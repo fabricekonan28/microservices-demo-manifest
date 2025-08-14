@@ -3,10 +3,8 @@ kind: Deployment
 metadata:
   name: gateway-service
   namespace: monapp
-  labels:
-    app: gateway-service
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: gateway-service
@@ -18,17 +16,13 @@ spec:
       containers:
         - name: gateway-service
           image: 5aae1a49af21.ngrok-free.app/monapp:15-gateway_service
+          imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8080
-          readinessProbe:
-            httpGet:
-              path: /health
-              port: 8080
-            initialDelaySeconds: 5
-            periodSeconds: 10
-          livenessProbe:
-            httpGet:
-              path: /health
-              port: 8080
-            initialDelaySeconds: 15
-            periodSeconds: 20
+          env:
+            - name: USERS_URL
+              value: "http://users-service:5000"
+            - name: PRODUCTS_URL
+              value: "http://products-service:5001"
+            - name: ORDERS_URL
+              value: "http://orders-service:5002"
