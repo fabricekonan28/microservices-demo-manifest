@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: orders-service
-          image: monapp:DEV-orders_service
+          image: localhost:4002/monapp:10-orders_service
           ports:
             - containerPort: 5002
           readinessProbe:

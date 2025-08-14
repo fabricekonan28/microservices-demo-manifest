@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: products-service
-          image: monapp:DEV-products_service
+          image: localhost:4002/monapp:10-products_service
           ports:
             - containerPort: 5001
           readinessProbe:
