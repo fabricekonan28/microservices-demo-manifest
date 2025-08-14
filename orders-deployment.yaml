@@ -20,6 +20,9 @@ spec:
           image: 5aae1a49af21.ngrok-free.app/monapp:15-orders_service
           ports:
             - containerPort: 5002
+          env:
+            - name: DATABASE_URL
+              value: "postgresql+psycopg2://postgres:postgres@postgres:5432/microservices_db"
           readinessProbe:
             httpGet:
               path: /health
