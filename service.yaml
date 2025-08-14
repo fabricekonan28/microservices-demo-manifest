@@ -1,0 +1,58 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: users-service
+  namespace: monapp
+spec:
+  selector:
+    app: users-service
+  ports:
+    - protocol: TCP
+      port: 5000
+      targetPort: 5000
+  type: ClusterIP
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: products-service
+  namespace: monapp
+spec:
+  selector:
+    app: products-service
+  ports:
+    - protocol: TCP
+      port: 5001
+      targetPort: 5001
+  type: ClusterIP
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: orders-service
+  namespace: monapp
+spec:
+  selector:
+    app: orders-service
+  ports:
+    - protocol: TCP
+      port: 5002
+      targetPort: 5002
+  type: ClusterIP
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: gateway-service
+  namespace: monapp
+spec:
+  selector:
+    app: gateway-service
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+  type: LoadBalancer
