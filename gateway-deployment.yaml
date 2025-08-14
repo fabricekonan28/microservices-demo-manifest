@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: gateway-service
-          image: localhost:5001/monapp:15-gateway_service
+          image: 5aae1a49af21.ngrok-free.app/monapp:15-gateway_service
           ports:
             - containerPort: 8080
           readinessProbe:
