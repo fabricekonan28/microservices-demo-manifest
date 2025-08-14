@@ -16,8 +16,8 @@ spec:
         app: users-service
     spec:
       containers:
-        - name: users-service
-          image: localhost:5001/monapp:15-users_service # image chargée dans Minikube
+        - name: users-service-pod
+          image: https://5aae1a49af21.ngrok-free.app/monapp:15-users_service # image chargée dans Minikube
           ports:
             - containerPort: 5000
           readinessProbe:
