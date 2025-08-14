@@ -3,28 +3,37 @@ kind: Deployment
 metadata:
   name: orders-service
   namespace: monapp
-  labels: { app: orders-service }
 spec:
   replicas: 2
-  selector: { matchLabels: { app: orders-service } }
+  selector:
+    matchLabels:
+      app: orders-service
   template:
     metadata:
-      labels: { app: orders-service }
+      labels:
+        app: orders-service
     spec:
       containers:
         - name: orders-service
           image: 5aae1a49af21.ngrok-free.app/monapp:10-orders_service
           imagePullPolicy: IfNotPresent
-          ports:
-            - containerPort: 8003
           env:
             - name: DATABASE_URL
-              value: "postgresql+psycopg2://postgres:postgres@postgres:5432/microservices_db"
+              valueFrom:
+                configMapKeyRef:
+                  name: app-config
+                  key: ORDERS_DATABASE_URL
+          ports:
+            - containerPort: 8003
           readinessProbe:
-            httpGet: { path: /health, port: 8003 }
+            httpGet:
+              path: /health
+              port: 8003
             initialDelaySeconds: 5
             periodSeconds: 10
           livenessProbe:
-            httpGet: { path: /health, port: 8003 }
+            httpGet:
+              path: /health
+              port: 8003
             initialDelaySeconds: 15
             periodSeconds: 20

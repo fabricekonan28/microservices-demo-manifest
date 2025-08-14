@@ -3,28 +3,37 @@ kind: Deployment
 metadata:
   name: products-service
   namespace: monapp
-  labels: { app: products-service }
 spec:
   replicas: 2
-  selector: { matchLabels: { app: products-service } }
+  selector:
+    matchLabels:
+      app: products-service
   template:
     metadata:
-      labels: { app: products-service }
+      labels:
+        app: products-service
     spec:
       containers:
         - name: products-service
           image: 5aae1a49af21.ngrok-free.app/monapp:10-products_service
           imagePullPolicy: IfNotPresent
-          ports:
-            - containerPort: 8002
           env:
             - name: DATABASE_URL
-              value: "postgresql+psycopg2://postgres:postgres@postgres:5432/microservices_db"
+              valueFrom:
+                configMapKeyRef:
+                  name: app-config
+                  key: PRODUCTS_DATABASE_URL
+          ports:
+            - containerPort: 8002
           readinessProbe:
-            httpGet: { path: /health, port: 8002 }
+            httpGet:
+              path: /health
+              port: 8002
             initialDelaySeconds: 5
             periodSeconds: 10
           livenessProbe:
-            httpGet: { path: /health, port: 8002 }
+            httpGet:
+              path: /health
+              port: 8002
             initialDelaySeconds: 15
             periodSeconds: 20

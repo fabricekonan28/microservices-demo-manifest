@@ -1,15 +1,13 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: postgres
+  name: postgres-service
   namespace: monapp
-  labels:
-    app: postgres
 spec:
   selector:
     app: postgres
   ports:
-    - name: postgres
+    - protocol: TCP
       port: 5432
       targetPort: 5432
 ---
@@ -18,27 +16,28 @@ kind: Service
 metadata:
   name: users-service
   namespace: monapp
-  labels: { app: users-service }
 spec:
-  selector: { app: users-service }
+  selector:
+    app: users-service
   ports:
-    - name: http
+    - protocol: TCP
       port: 8001
       targetPort: 8001
-
+  type: ClusterIP
 ---
 apiVersion: v1
 kind: Service
 metadata:
   name: products-service
   namespace: monapp
-  labels: { app: products-service }
 spec:
-  selector: { app: products-service }
+  selector:
+    app: products-service
   ports:
-    - name: http
+    - protocol: TCP
       port: 8002
       targetPort: 8002
+  type: ClusterIP
 
 ---
 apiVersion: v1
@@ -46,13 +45,14 @@ kind: Service
 metadata:
   name: orders-service
   namespace: monapp
-  labels: { app: orders-service }
 spec:
-  selector: { app: orders-service }
+  selector:
+    app: orders-service
   ports:
-    - name: http
+    - protocol: TCP
       port: 8003
       targetPort: 8003
+  type: ClusterIP
 
   
 
@@ -61,11 +61,11 @@ kind: Service
 metadata:
   name: gateway-service
   namespace: monapp
-  labels: { app: gateway-service }
 spec:
-  selector: { app: gateway-service }
+  selector:
+    app: gateway-service
   ports:
-    - name: http
+    - protocol: TCP
       port: 8000
       targetPort: 8000
   type: LoadBalancer
