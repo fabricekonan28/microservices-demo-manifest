@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: products-service
-          image: localhost:4002/monapp:10-products_service
+          image: 5aae1a49af21.ngrok-free.app/monapp:10-products_service
           ports:
             - containerPort: 5001
           readinessProbe:
