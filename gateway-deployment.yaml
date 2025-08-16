@@ -1,3 +1,4 @@
+# Déploiement Gateway Service
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -13,37 +14,32 @@ spec:
       labels:
         app: gateway-service
     spec:
+      initContainers:
+        - name: wait-for-backends
+          image: busybox:1.28
+          command: ['sh', '-c', 'until nc -z users-service 8001 && nc -z products-service 8002 && nc -z orders-service 8003; do echo "Waiting for backends..."; sleep 5; done']
       containers:
         - name: gateway-service
-          image: 5aae1a49af21.ngrok-free.app/monapp:10-gateway_service
-          imagePullPolicy: IfNotPresent
+          image: d0eb58e49125.ngrok-free.app/deploy:15-gateway-service
+          envFrom:
+            - configMapRef:
+                name: app-config
           env:
-            - name: USERS_URL
-              valueFrom:
-                configMapKeyRef:
-                  name: app-config
-                  key: USERS_URL
-            - name: PRODUCTS_URL
-              valueFrom:
-                configMapKeyRef:
-                  name: app-config
-                  key: PRODUCTS_URL
-            - name: ORDERS_URL
-              valueFrom:
-                configMapKeyRef:
-                  name: app-config
-                  key: ORDERS_URL
+            - name: USERS_SERVICE_URL
+              value: "http://users-service:8001"
+            - name: PRODUCTS_SERVICE_URL
+              value: "http://products-service:8002"
+            - name: ORDERS_SERVICE_URL
+              value: "http://orders-service:8003"
+            - name: GATEWAY_ROUTES
+              value: |
+                /api/users=>http://users-service:8001,
+                /api/products=>http://products-service:8002,
+                /api/orders=>http://orders-service:8003
           ports:
             - containerPort: 8000
           readinessProbe:
-            httpGet:
-              path: /health
+            tcpSocket:
               port: 8000
-            initialDelaySeconds: 5
-            periodSeconds: 10
-          livenessProbe:
-            httpGet:
-              path: /health
-              port: 8000
-            initialDelaySeconds: 15
-            periodSeconds: 20
+            initialDelaySeconds: 20
+            periodSeconds: 5

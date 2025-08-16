@@ -1,15 +1,15 @@
+# Configuration des variables d'environnement
 apiVersion: v1
 kind: ConfigMap
 metadata:
   name: app-config
   namespace: monapp
 data:
-  POSTGRES_USER: postgres
-  POSTGRES_PASSWORD: postgres
-  POSTGRES_DB: microservices_db
-  USERS_DATABASE_URL: postgresql+psycopg2://postgres:postgres@postgres-service:5432/microservices_db
-  PRODUCTS_DATABASE_URL: postgresql+psycopg2://postgres:postgres@postgres-service:5432/microservices_db
-  ORDERS_DATABASE_URL: postgresql+psycopg2://postgres:postgres@postgres-service:5432/microservices_db
-  USERS_URL: http://users-service:8001
-  PRODUCTS_URL: http://products-service:8002
-  ORDERS_URL: http://orders-service:8003
+  DB_HOST: "db"
+  POSTGRES_USER: "postgres"
+  POSTGRES_PASSWORD: "postgres"
+  POSTGRES_DB: "microservices_db"
+  DATABASE_URL: "postgresql+psycopg2://postgres:postgres@db:5432/microservices_db"
+  USERS_SERVICE_URL: "http://users-service:8001"
+  PRODUCTS_SERVICE_URL: "http://products-service:8002"
+  ORDERS_SERVICE_URL: "http://orders-service:8003"

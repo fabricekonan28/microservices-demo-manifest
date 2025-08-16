@@ -1,3 +1,4 @@
+# Déploiement PostgreSQL
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -22,8 +23,9 @@ spec:
           ports:
             - containerPort: 5432
           volumeMounts:
-            - name: postgres-storage
-              mountPath: /var/lib/postgresql/data
+            - mountPath: /var/lib/postgresql/data
+              name: postgres-data
       volumes:
-        - name: postgres-storage
-          emptyDir: {}
+        - name: postgres-data
+          persistentVolumeClaim:
+            claimName: postgres-pvc

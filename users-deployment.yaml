@@ -1,10 +1,11 @@
+# Déploiement Users Service
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: users-service
   namespace: monapp
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: users-service
@@ -13,27 +14,20 @@ spec:
       labels:
         app: users-service
     spec:
+      initContainers:
+        - name: wait-for-db
+          image: busybox:1.28
+          command: ['sh', '-c', 'until nc -z db 5432; do echo "Waiting for PostgreSQL..."; sleep 2; done']
       containers:
         - name: users-service
-          image: 5aae1a49af21.ngrok-free.app/monapp:10-users_service
-          imagePullPolicy: IfNotPresent
-          env:
-            - name: DATABASE_URL
-              valueFrom:
-                configMapKeyRef:
-                  name: app-config
-                  key: USERS_DATABASE_URL
+          image: d0eb58e49125.ngrok-free.app/deploy:15-users-service
+          envFrom:
+            - configMapRef:
+                name: app-config
           ports:
             - containerPort: 8001
           readinessProbe:
             httpGet:
-              path: /health
               port: 8001
-            initialDelaySeconds: 5
-            periodSeconds: 10
-          livenessProbe:
-            httpGet:
-              path: /health
-              port: 8001
-            initialDelaySeconds: 15
-            periodSeconds: 20
+            initialDelaySeconds: 10
+            periodSeconds: 5
