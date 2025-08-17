@@ -24,7 +24,7 @@ spec:
           command: ['sh', '-c', 'until nc -z db 5432; do echo "Waiting for PostgreSQL..."; sleep 2; done']
       containers:
         - name: users-service
-          image: d0eb58e49125.ngrok-free.app/deploy:15-users-service
+          image: localhost:4002/deploy:16-users-service
           envFrom:
             - configMapRef:
                 name: app-config
