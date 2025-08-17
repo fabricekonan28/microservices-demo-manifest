@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: gateway-service
+  name: gateway-service1
   namespace: monapp
   labels: { app: gateway-service }
 spec:
