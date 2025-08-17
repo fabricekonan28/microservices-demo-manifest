@@ -13,7 +13,7 @@ spec:
     spec:
       containers:
         - name: gateway-service
-          image: 5aae1a49af21.ngrok-free.app/monapp:10-gateway_service
+          image: localhost:4002/deploy:16-gateway-service
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8000
