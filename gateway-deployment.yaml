@@ -24,7 +24,7 @@ spec:
           command: ['sh', '-c', 'until nc -z users-service 8001 && nc -z products-service 8002 && nc -z orders-service 8003; do echo "Waiting for backends..."; sleep 5; done']
       containers:
         - name: gateway-service
-          image: a52344538257.ngrok-free.app/deploy:27-gateway-service
+          image: a52344538257.ngrok-free.app/deploy:28-gateway-service
           imagePullPolicy: Always
           envFrom:
             - configMapRef:

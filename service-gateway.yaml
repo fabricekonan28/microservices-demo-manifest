@@ -1,0 +1,14 @@
+# Service Gateway (NodePort)
+apiVersion: v1
+kind: Service
+metadata:
+  name: gateway-service
+  namespace: monapp
+spec:
+  type: NodePort
+  selector:
+    app: gateway-service
+  ports:
+    - port: 8000
+      targetPort: 8000
+      nodePort: 31083

@@ -1,0 +1,12 @@
+# Service Orders
+apiVersion: v1
+kind: Service
+metadata:
+  name: orders-service
+  namespace: monapp
+spec:
+  selector:
+    app: orders-service
+  ports:
+    - port: 8003
+      targetPort: 8003

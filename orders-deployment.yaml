@@ -24,7 +24,7 @@ spec:
           command: ['sh', '-c', 'until nc -z db 5432; do echo "Waiting for PostgreSQL..."; sleep 2; done']
       containers:
         - name: orders-service
-          image: a52344538257.ngrok-free.app/deploy:27-orders-service
+          image: a52344538257.ngrok-free.app/deploy:28-orders-service
           imagePullPolicy: Always
           envFrom:
             - configMapRef:
