@@ -13,7 +13,7 @@ spec:
     spec:
       containers:
         - name: products-service
-          image: 5aae1a49af21.ngrok-free.app/monapp:10-products_service
+          image: 23773d1a560f.ngrok-free.app/deploy:28-products_service
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8002
