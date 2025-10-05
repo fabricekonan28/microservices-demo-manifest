@@ -13,7 +13,7 @@ spec:
     spec:
       containers:
         - name: users-service
-          image: 23773d1a560f.ngrok-free.app/deploy:28-users_service
+          image: 23773d1a560f.ngrok-free.app/deploy:28-users-service
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8001
