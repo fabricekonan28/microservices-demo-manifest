@@ -13,7 +13,7 @@ spec:
     spec:
       containers:
         - name: gateway-service
-          image: 23773d1a560f.ngrok-free.app/deploy:39-gateway-service
+          image: 23773d1a560f.ngrok-free.app/deploy:40-gateway-service
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8000

@@ -13,7 +13,7 @@ spec:
     spec:
       containers:
         - name: orders-service
-          image: 23773d1a560f.ngrok-free.app/deploy:28-orders-service
+          image: 23773d1a560f.ngrok-free.app/deploy:40-orders_service
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8003
